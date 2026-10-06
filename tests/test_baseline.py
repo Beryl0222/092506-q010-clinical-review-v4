@@ -10,11 +10,11 @@ class 基线行为测试(unittest.TestCase):
         result = json.loads(handle(json.dumps({"action": "health"}), Service(Store())))
         self.assertEqual(result["status"], "ok")
 
-    def test_register_and_find(self):
+    def test_create_and_get_session(self):
         service = Service(Store())
-        created = service.register("r-1", "owner-1")
-        self.assertEqual(created["state"], "draft")
-        self.assertEqual(service.find("r-1")["owner_id"], "owner-1")
+        created = service.create_session("s-1", "脱敏后的提问", ["normal"])
+        self.assertEqual(created["state"], "open")
+        self.assertEqual(service.get_session("s-1")["risk_labels"], ("normal",))
 
 
 if __name__ == "__main__":
